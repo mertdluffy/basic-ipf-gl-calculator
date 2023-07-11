@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>IPF GL Calculator</title>
+</head>
+<body>
+<div class="container text-center w-100">
+
+    <h1>
+        Gladyonun Amını Götünü Sikme App'i
+    </h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Bw</th>
+            <th scope="col">Squat</th>
+            <th scope="col">Bench</th>
+            <th scope="col">Deadlift</th>
+            <th scope="col">Total</th>
+            <th scope="col">GL</th>
+            <th scope="col">To Pass</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1st Opponent</th>
+            <td><input type="text" id="first_bw" class="form-control" placeholder="Bw"></td>
+            <td><input type="text" id="first_squat" class="form-control" placeholder="Squat"></td>
+            <td><input type="text" id="first_bench" class="form-control" placeholder="Bench"></td>
+            <td><input type="text" id="first_deadlift" class="form-control" placeholder="Deadlift"></td>
+            <td id="first_total"></td>
+            <td id="first_gl"></td>
+            <td id="first_to_pass"></td>
+        </tr>
+        <tr>
+            <th scope="row">2nd Opponent</th>
+            <td><input type="text" id="second_bw" class="form-control" placeholder="Bw"></td>
+            <td><input type="text" id="second_squat" class="form-control" placeholder="Squat"></td>
+            <td><input type="text" id="second_bench" class="form-control" placeholder="Bench"></td>
+            <td><input type="text" id="second_deadlift" class="form-control" placeholder="Deadlift"></td>
+            <td id="second_total"></td>
+            <td id="second_gl"></td>
+            <td id="second_to_pass"></td>
+        </tr>
+        <tr>
+            <th scope="row">3rd Opponent</th>
+            <td><input type="text" id="third_bw" class="form-control" placeholder="Bw"></td>
+            <td><input type="text" id="third_squat" class="form-control" placeholder="Squat"></td>
+            <td><input type="text" id="third_bench" class="form-control" placeholder="Bench"></td>
+            <td><input type="text" id="third_deadlift" class="form-control" placeholder="Deadlift"></td>
+            <td id="third_total"></td>
+            <td id="third_gl"></td>
+            <td id="third_to_pass"></td>
+        </tr>
+        <tr>
+            <th scope="row">You</th>
+            <td><input type="text" id="your_bw" class="form-control" placeholder="Bw"></td>
+            <td><input type="text" id="your_squat" class="form-control" placeholder="Squat"></td>
+            <td><input type="text" id="your_bench" class="form-control" placeholder="Bench"></td>
+            <td><input type="text" id="your_deadlift" class="form-control" placeholder="Deadlift"></td>
+            <td id="your_total"></td>
+            <td id="your_gl"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+<script>
+
+        //ipcs
+    var your_ipc = 0
+    var your_total = 0
+    var first_ipc = 0
+    var first_total = 0
+    var second_ipc = 0
+    var second_total = 0
+    var third_ipc = 0
+    var third_total = 0
+
+        //to passes
+
+        var first_to_pass= document.getElementById('first_to_pass');
+        var second_to_pass= document.getElementById('second_to_pass');
+        var third_to_pass= document.getElementById('third_to_pass');
+
+
+    var your_bw = document.getElementById('your_bw');
+    var your_squat = document.getElementById('your_squat');
+    var your_bench = document.getElementById('your_bench');
+    var your_deadlift = document.getElementById('your_deadlift');
+    var your_total_text = document.getElementById('your_total');
+    var your_gl= document.getElementById('your_gl');
+    your_bw.addEventListener("input", your_sum);
+    your_squat.addEventListener("input", your_sum);
+    your_bench.addEventListener("input", your_sum);
+    your_deadlift.addEventListener("input", your_sum);
+
+    function your_sum() {
+
+        your_total = (parseFloat(your_squat.value) || 0) + (parseFloat(your_deadlift.value) || 0) + (parseFloat(your_bench.value) || 0);
+        your_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(your_bw.value))))
+        your_total_text.innerHTML = your_total;
+        your_gl.innerHTML = (your_total * your_ipc).toFixed(2)
+        first_to_pass.innerText = ( (first_total * first_ipc)/ your_ipc - your_total ).toFixed(2)
+        second_to_pass.innerText = ( (second_total * second_ipc)/ your_ipc - your_total ).toFixed(2)
+        third_to_pass.innerText = ( (third_total * third_ipc)/ your_ipc - your_total ).toFixed(2)
+    }
+
+    var first_bw = document.getElementById('first_bw');
+    var first_squat = document.getElementById('first_squat');
+    var first_bench = document.getElementById('first_bench');
+    var first_deadlift = document.getElementById('first_deadlift');
+    var first_total_text = document.getElementById('first_total');
+    var first_gl= document.getElementById('first_gl');
+
+    first_bw.addEventListener("input", first_sum);
+    first_squat.addEventListener("input", first_sum);
+    first_bench.addEventListener("input", first_sum);
+    first_deadlift.addEventListener("input", first_sum);
+
+    function first_sum() {
+
+        first_total = (parseFloat(first_squat.value) || 0) + (parseFloat(first_deadlift.value) || 0) + (parseFloat(first_bench.value) || 0);
+        first_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(first_bw.value))))
+        first_total_text.innerHTML = first_total;
+        first_gl.innerHTML = (first_total * first_ipc).toFixed(2)
+        first_to_pass.innerText = ( (first_total * first_ipc)/ your_ipc - your_total ).toFixed(2)
+    }
+
+    var second_bw = document.getElementById('second_bw');
+    var second_squat = document.getElementById('second_squat');
+    var second_bench = document.getElementById('second_bench');
+    var second_deadlift = document.getElementById('second_deadlift');
+    var second_total_text = document.getElementById('second_total');
+    var second_gl= document.getElementById('second_gl');
+
+    second_bw.addEventListener("input", second_sum);
+    second_squat.addEventListener("input", second_sum);
+    second_bench.addEventListener("input", second_sum);
+    second_deadlift.addEventListener("input", second_sum);
+
+    function second_sum() {
+
+        second_total = (parseFloat(second_squat.value) || 0) + (parseFloat(second_deadlift.value) || 0) + (parseFloat(second_bench.value) || 0);
+        second_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(second_bw.value))))
+        second_total_text.innerHTML = second_total;
+        second_gl.innerHTML = (second_total * second_ipc).toFixed(2)
+        second_to_pass.innerText = ( (second_total * second_ipc)/ your_ipc - your_total ).toFixed(2)
+    }
+
+    const third_bw = document.getElementById('third_bw');
+    var third_squat = document.getElementById('third_squat');
+    var third_bench = document.getElementById('third_bench');
+    var third_deadlift = document.getElementById('third_deadlift');
+    var third_total_text = document.getElementById('third_total');
+    var third_gl= document.getElementById('third_gl');
+
+    third_bw.addEventListener("input", third_sum);
+    third_squat.addEventListener("input", third_sum);
+    third_bench.addEventListener("input", third_sum);
+    third_deadlift.addEventListener("input", third_sum);
+
+    function third_sum() {
+
+        third_total = (parseFloat(third_squat.value) || 0) + (parseFloat(third_deadlift.value) || 0) + (parseFloat(third_bench.value) || 0);
+        third_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(third_bw.value))))
+        third_total_text.innerHTML = third_total;
+        third_gl.innerHTML = (third_total * third_ipc).toFixed(2)
+        third_to_pass.innerText = ( (third_total * third_ipc)/ your_ipc - your_total ).toFixed(2)
+    }
+</script>
+</html>
