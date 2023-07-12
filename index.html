@@ -27,33 +27,33 @@
         <tbody>
         <tr>
             <th scope="row">1st Opponent</th>
-            <td><input type="text" id="first_bw" class="form-control" placeholder="Bw"></td>
-            <td><input type="text" id="first_squat" class="form-control" placeholder="Squat"></td>
-            <td><input type="text" id="first_bench" class="form-control" placeholder="Bench"></td>
-            <td><input type="text" id="first_deadlift" class="form-control" placeholder="Deadlift"></td>
-            <td id="first_total"></td>
-            <td id="first_gl"></td>
-            <td id="first_to_pass"></td>
+            <td><input type="text" id="bw_1" class="form-control" placeholder="Bw"></td>
+            <td><input type="text" id="squat_1" class="form-control" placeholder="Squat"></td>
+            <td><input type="text" id="bench_1" class="form-control" placeholder="Bench"></td>
+            <td><input type="text" id="deadlift_1" class="form-control" placeholder="Deadlift"></td>
+            <td id="total_1"></td>
+            <td id="gl_1"></td>
+            <td id="to_pass_1"></td>
         </tr>
         <tr>
             <th scope="row">2nd Opponent</th>
-            <td><input type="text" id="second_bw" class="form-control" placeholder="Bw"></td>
-            <td><input type="text" id="second_squat" class="form-control" placeholder="Squat"></td>
-            <td><input type="text" id="second_bench" class="form-control" placeholder="Bench"></td>
-            <td><input type="text" id="second_deadlift" class="form-control" placeholder="Deadlift"></td>
-            <td id="second_total"></td>
-            <td id="second_gl"></td>
-            <td id="second_to_pass"></td>
+            <td><input type="text" id="bw_2" class="form-control" placeholder="Bw"></td>
+            <td><input type="text" id="squat_2" class="form-control" placeholder="Squat"></td>
+            <td><input type="text" id="bench_2" class="form-control" placeholder="Bench"></td>
+            <td><input type="text" id="deadlift_2" class="form-control" placeholder="Deadlift"></td>
+            <td id="total_2"></td>
+            <td id="gl_2"></td>
+            <td id="to_pass_2"></td>
         </tr>
         <tr>
             <th scope="row">3rd Opponent</th>
-            <td><input type="text" id="third_bw" class="form-control" placeholder="Bw"></td>
-            <td><input type="text" id="third_squat" class="form-control" placeholder="Squat"></td>
-            <td><input type="text" id="third_bench" class="form-control" placeholder="Bench"></td>
-            <td><input type="text" id="third_deadlift" class="form-control" placeholder="Deadlift"></td>
-            <td id="third_total"></td>
-            <td id="third_gl"></td>
-            <td id="third_to_pass"></td>
+            <td><input type="text" id="bw_3" class="form-control" placeholder="Bw"></td>
+            <td><input type="text" id="squat_3" class="form-control" placeholder="Squat"></td>
+            <td><input type="text" id="bench_3" class="form-control" placeholder="Bench"></td>
+            <td><input type="text" id="deadlift_3" class="form-control" placeholder="Deadlift"></td>
+            <td id="total_3"></td>
+            <td id="gl_3"></td>
+            <td id="to_pass_3"></td>
         </tr>
         <tr>
             <th scope="row">You</th>
@@ -67,25 +67,51 @@
         </tbody>
     </table>
 
+
+    <table class="table">
+        <thead>
+        <h1>Attempt Selection</h1>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">1st</th>
+            <th scope="col">2nd</th>
+            <th scope="col">3rd goal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">Attempts</th>
+            <td><input type="text" id="first_attempt" class="form-control" placeholder="1st Attempt"></td>
+            <td><input type="text" id="second_attempt" class="form-control" placeholder="2nd Attempt"></td>
+            <td><input type="text" id="third_attempt" class="form-control" placeholder="3rd Attempt"></td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 </body>
 <script>
+//attempt selection
+var first_attempt = document.getElementById('first_attempt');
+var second_attempt = document.getElementById('second_attempt');
+var third_attempt = document.getElementById('third_attempt');
 
-        //ipcs
+third_attempt.addEventListener("input", calculateAttempts);
+
+function calculateAttempts(){
+    console.log(2)
+    first_attempt.value = (parseFloat(third_attempt.value)*91/100).toFixed(2)
+    second_attempt.value = (parseFloat(third_attempt.value)*96/100).toFixed(2)
+}
+//ipcs
     var your_ipc = 0
     var your_total = 0
-    var first_ipc = 0
-    var first_total = 0
-    var second_ipc = 0
-    var second_total = 0
-    var third_ipc = 0
-    var third_total = 0
+    var ipcs = [0.0,0.0,0.0]
+    var totals = [0.0,0.0,0.0]
 
         //to passes
 
-        var first_to_pass= document.getElementById('first_to_pass');
-        var second_to_pass= document.getElementById('second_to_pass');
-        var third_to_pass= document.getElementById('third_to_pass');
+    var to_passes= [document.getElementById('to_pass_1'), document.getElementById('to_pass_2'), document.getElementById('to_pass_3')];
 
 
     var your_bw = document.getElementById('your_bw');
@@ -105,72 +131,31 @@
         your_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(your_bw.value))))
         your_total_text.innerHTML = your_total;
         your_gl.innerHTML = (your_total * your_ipc).toFixed(2)
-        first_to_pass.innerText = ( (first_total * first_ipc)/ your_ipc - your_total ).toFixed(2)
-        second_to_pass.innerText = ( (second_total * second_ipc)/ your_ipc - your_total ).toFixed(2)
-        third_to_pass.innerText = ( (third_total * third_ipc)/ your_ipc - your_total ).toFixed(2)
+        to_passes[0].innerText = ( (totals[0] * ipcs[0])/ your_ipc - your_total ).toFixed(2)
+        to_passes[1].innerText = ( (totals[1] * ipcs[1])/ your_ipc - your_total ).toFixed(2)
+        to_passes[2].innerText = ( (totals[2] * ipcs[2])/ your_ipc - your_total ).toFixed(2)
     }
 
-    var first_bw = document.getElementById('first_bw');
-    var first_squat = document.getElementById('first_squat');
-    var first_bench = document.getElementById('first_bench');
-    var first_deadlift = document.getElementById('first_deadlift');
-    var first_total_text = document.getElementById('first_total');
-    var first_gl= document.getElementById('first_gl');
+    for(let i=1;i<2;i++){
+        var bw = document.getElementById('bw_'+i.toString());
+        var squat = document.getElementById('squat_'+i.toString());
+        var bench = document.getElementById('bench_'+i.toString());
+        var deadlift = document.getElementById('deadlift_'+i.toString());
+        var total_text = document.getElementById('total_'+i.toString());
+        var gl= document.getElementById('gl_'+i.toString());
 
-    first_bw.addEventListener("input", first_sum);
-    first_squat.addEventListener("input", first_sum);
-    first_bench.addEventListener("input", first_sum);
-    first_deadlift.addEventListener("input", first_sum);
+        bw.addEventListener("input", first_sum);
+        squat.addEventListener("input", first_sum);
+        bench.addEventListener("input", first_sum);
+        deadlift.addEventListener("input", first_sum);
 
-    function first_sum() {
-
-        first_total = (parseFloat(first_squat.value) || 0) + (parseFloat(first_deadlift.value) || 0) + (parseFloat(first_bench.value) || 0);
-        first_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(first_bw.value))))
-        first_total_text.innerHTML = first_total;
-        first_gl.innerHTML = (first_total * first_ipc).toFixed(2)
-        first_to_pass.innerText = ( (first_total * first_ipc)/ your_ipc - your_total ).toFixed(2)
-    }
-
-    var second_bw = document.getElementById('second_bw');
-    var second_squat = document.getElementById('second_squat');
-    var second_bench = document.getElementById('second_bench');
-    var second_deadlift = document.getElementById('second_deadlift');
-    var second_total_text = document.getElementById('second_total');
-    var second_gl= document.getElementById('second_gl');
-
-    second_bw.addEventListener("input", second_sum);
-    second_squat.addEventListener("input", second_sum);
-    second_bench.addEventListener("input", second_sum);
-    second_deadlift.addEventListener("input", second_sum);
-
-    function second_sum() {
-
-        second_total = (parseFloat(second_squat.value) || 0) + (parseFloat(second_deadlift.value) || 0) + (parseFloat(second_bench.value) || 0);
-        second_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(second_bw.value))))
-        second_total_text.innerHTML = second_total;
-        second_gl.innerHTML = (second_total * second_ipc).toFixed(2)
-        second_to_pass.innerText = ( (second_total * second_ipc)/ your_ipc - your_total ).toFixed(2)
-    }
-
-    const third_bw = document.getElementById('third_bw');
-    var third_squat = document.getElementById('third_squat');
-    var third_bench = document.getElementById('third_bench');
-    var third_deadlift = document.getElementById('third_deadlift');
-    var third_total_text = document.getElementById('third_total');
-    var third_gl= document.getElementById('third_gl');
-
-    third_bw.addEventListener("input", third_sum);
-    third_squat.addEventListener("input", third_sum);
-    third_bench.addEventListener("input", third_sum);
-    third_deadlift.addEventListener("input", third_sum);
-
-    function third_sum() {
-
-        third_total = (parseFloat(third_squat.value) || 0) + (parseFloat(third_deadlift.value) || 0) + (parseFloat(third_bench.value) || 0);
-        third_ipc = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(third_bw.value))))
-        third_total_text.innerHTML = third_total;
-        third_gl.innerHTML = (third_total * third_ipc).toFixed(2)
-        third_to_pass.innerText = ( (third_total * third_ipc)/ your_ipc - your_total ).toFixed(2)
+        function first_sum() {
+            totals[i-1] = (parseFloat(squat.value) || 0) + (parseFloat(deadlift.value) || 0) + (parseFloat(bench.value) || 0);
+            ipcs[i-1] = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(bw.value))))
+            total_text.innerHTML = totals[i-1];
+            gl.innerHTML = (totals[i-1] * ipcs[i-1]).toFixed(2)
+            to_passes[i-1].innerText = ((totals[i-1] * ipcs[i-1])/ your_ipc - your_total).toFixed(2)
+        }
     }
 </script>
 </html>
