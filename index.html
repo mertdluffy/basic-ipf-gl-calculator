@@ -100,8 +100,8 @@ third_attempt.addEventListener("input", calculateAttempts);
 
 function calculateAttempts(){
     console.log(2)
-    first_attempt.value = (parseFloat(third_attempt.value)*91/100).toFixed(2)
-    second_attempt.value = (parseFloat(third_attempt.value)*96/100).toFixed(2)
+    first_attempt.value = Math.round(parseFloat(third_attempt.value)*91/(2.5*100))*2.5.toFixed(2)
+    second_attempt.value = Math.round(parseFloat(third_attempt.value)*96/(2.5*100))*2.5.toFixed(2)
 }
 //ipcs
     var your_ipc = 0
