@@ -136,24 +136,30 @@ function calculateAttempts(){
         to_passes[2].innerText = ( (totals[2] * ipcs[2])/ your_ipc - your_total ).toFixed(2)
     }
 
-    for(let i=1;i<2;i++){
-        var bw = document.getElementById('bw_'+i.toString());
-        var squat = document.getElementById('squat_'+i.toString());
-        var bench = document.getElementById('bench_'+i.toString());
-        var deadlift = document.getElementById('deadlift_'+i.toString());
-        var total_text = document.getElementById('total_'+i.toString());
-        var gl= document.getElementById('gl_'+i.toString());
+    var bws = [];
+    var squats = [];
+    var benchs = [];
+    var deadlifts = [];
+    var total_texts = [];
+    var gls = [];
+    for(let i=1;i<4;i++){
+        bws.push(document.getElementById('bw_'+i.toString()));
+        squats.push(document.getElementById('squat_'+i.toString()));
+        benchs.push(document.getElementById('bench_'+i.toString()));
+        deadlifts.push(document.getElementById('deadlift_'+i.toString()));
+        total_texts.push(document.getElementById('total_'+i.toString()));
+        gls.push(document.getElementById('gl_'+i.toString()));
 
-        bw.addEventListener("input", first_sum);
-        squat.addEventListener("input", first_sum);
-        bench.addEventListener("input", first_sum);
-        deadlift.addEventListener("input", first_sum);
+        bws[i-1].addEventListener("input", sum);
+        squats[i-1].addEventListener("input", sum);
+        benchs[i-1].addEventListener("input", sum);
+        deadlifts[i-1].addEventListener("input", sum);
 
-        function first_sum() {
-            totals[i-1] = (parseFloat(squat.value) || 0) + (parseFloat(deadlift.value) || 0) + (parseFloat(bench.value) || 0);
-            ipcs[i-1] = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(bw.value))))
-            total_text.innerHTML = totals[i-1];
-            gl.innerHTML = (totals[i-1] * ipcs[i-1]).toFixed(2)
+        function sum() {
+            totals[i-1] = (parseFloat(squats[i-1].value) || 0) + (parseFloat(deadlifts[i-1].value) || 0) + (parseFloat(benchs[i-1].value) || 0);
+            ipcs[i-1] = 100/(1199.72839-(1025.18162*Math.pow(Math.E,-1*0.00921*parseFloat(bws[i-1].value))))
+            total_texts[i-1].innerHTML = totals[i-1];
+            gls[i-1].innerHTML = (totals[i-1] * ipcs[i-1]).toFixed(2)
             to_passes[i-1].innerText = ((totals[i-1] * ipcs[i-1])/ your_ipc - your_total).toFixed(2)
         }
     }
